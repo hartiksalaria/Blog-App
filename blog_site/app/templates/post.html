@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="width: 18rem;">
+  <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{params["post"].title}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{params["post"].date}}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">{{params["post"].user.username}}</h6>
+          <p class="card-text">{{params["post"].content}}</p>
+        </div>
+        {% if current_user.is_authenticated and current_user.username == params["post"].user.username %}
+            <form method ="POST" action="/post/{{params['post'].id}}/edit">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                  <button name="edit" type="submit" class="btn btn-info" value="edit">Edit</button>
+            </form>
+            <form method ="POST" action="/post/{{params['post'].id}}/delete">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                  <button name="delete" type="submit" class="btn btn-danger" value="delete">Delete</button>
+            </form>
+        {% endif %}
+        <div class="">
+          <legend>Comments</legend>
+          {% for comment in params["comments"] %}
+          <div class="card-body">
+            <h5 class="card-title">{{comment.author}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{comment.date}}</h6>
+            <p class="card-text">{{comment.comment_content}}</p>
+          </div>
+          {% endfor %}
+        </div>
+            <legend>Add a comment</legend>
+                <form class="" action="" method="POST">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                  {{params["comment"].content(class="form-control", value="")}}
+                  {{params["comment"].submit(class="btn btn-outline-primary mt-4")}}
+                </form>
+      </div>
+</div>
+{% endblock %}

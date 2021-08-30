@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <form action="" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="mb-3">
+            {{params["form"].title.label}}
+            {{params["form"].title(class="form-control", value = params["post"].title)}}
+            {{params["form"].content.label}}
+            {{params["form"].content(class="form-control", value = params["post"].content)}}
+            {{params["form"].submit(class="btn btn-outline-primary mt-4")}}
+        </div>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}  {% endblock %}
+
+{%block  content%}
+
+<div class="card container-sm mt-4 ">
+    <div class="card-body">
+        <form action="" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <h1 style="text-align:center;">
+                  <div class="circular--portrait">
+                      <img src="static/images/{{current_user.image}}" alt="">
+                  </div>
+            </h1>
+            <div class="form-group">
+                <legend>Email</legend>
+                {{form.email(class="form-control is-invalid", value=current_user.email)}}
+            </div >
+            <div class="form-group mt-2">
+                <legend>Username</legend>
+                {{form.username(class="form-control is-invalid", value=current_user.username)}}
+            </div >
+            <div class="form-group mt-2">
+                <legend>Enter Previous Password</legend>
+                {{form.previous_password(class="form-control")}}
+            </div >
+            <div class="form-group mt-2">
+                <legend>Enter New Password</legend>
+                {{form.password(class="form-control")}}
+            </div >
+            <div class="form-group mt-2">
+                <legend>Confirm Password</legend>
+                {{form.confirm_password(class="form-control")}}
+            </div >
+            {{form.submit(class="btn btn-outline-primary mt-4")}}
+            <br>
+            <br>
+        </form>
+    </div>
+  </div>
+
+{% endblock %}

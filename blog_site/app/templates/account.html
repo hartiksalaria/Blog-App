@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %} Account {% endblock %}
+{% block content %}
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <div class="circular--portrait">
+          <img src="static/images/{{current_user.image}}" alt="">
+      </div>
+      <br><br>
+      <h5 class="card-title">{{ current_user.username }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Email: {{ current_user.email }}</h6>
+      <h6 class="card-subtitle mb-2 text-muted">Password: {{ current_user.password }}</h6>
+    </div>
+    <div class="">
+      <form method ="POST" action="{{url_for('create_post')}}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <button type="submit" class="btn btn-info">Create Post</button>
+      </form>
+      <form method ="POST" action="{{url_for('edit_profile')}}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <button type="submit" class="btn btn-info">Edit Profile</button>
+      </form>
+    </div>
+  </div>
+  <br><br><br>
+  <label for="">All the posts by {{current_user.username}}</label>
+  {% for post in posts %}
+  <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title"><a href="/post/{{post.id}}">{{post.title}}</a></h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">{{post.user.username}}</h6>
+        <p class="card-text">{{post.content[:10]}}...</p>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
